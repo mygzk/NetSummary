@@ -9,7 +9,7 @@ import android.view.View;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    String TAG = getClass().getSimpleName();
+   public final  String TAG = getClass().getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
