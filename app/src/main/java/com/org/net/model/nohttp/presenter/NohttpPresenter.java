@@ -1,14 +1,8 @@
-package com.org.net.model.nohttp;
+package com.org.net.model.nohttp.presenter;
 
-import android.nfc.Tag;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
-import com.org.net.R;
-import com.org.net.base.BaseActivity;
+import com.org.net.base.inteface.IBaseView;
 import com.org.net.constant.Constants;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -17,45 +11,26 @@ import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
-public class NohttpActivity extends BaseActivity {
+/**
+ * Created by guozhk
+ * create time on 2017/12/27.
+ */
+
+public class NohttpPresenter {
+    private String TAG = NohttpPresenter.class.getSimpleName();
+    IBaseView mView;
+
+    public NohttpPresenter(IBaseView mView) {
+        this.mView = mView;
+    }
+
     /**
-     * 用来标志请求的what, 类似handler的what一样，这里用来区分请求。
+     * NoHttp 原生用法
      */
-    private static final int NOHTTP_WHAT_TEST = 0x001;
-    /**
-     * 请求队列。
-     */
-    private RequestQueue mQueue;
-
-    private TextView tvResult;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_orgin;
-    }
-
-    @Override
-    protected void initView() {
-        tvResult = queryViewById(R.id.nohttp_request_result);
-        queryViewById(R.id.nohttp_request_origin, true);
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.nohttp_request_origin:
-                requestOrigin();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void requestOrigin() {
-        mQueue = NoHttp.newRequestQueue();
+    public void requestOrigin() {
+        RequestQueue mQueue = NoHttp.newRequestQueue();
         // 创建请求对象。
-        Request<String> request = NoHttp.createStringRequest(Constants.URL_NOHTTP_JSONOBJECT, RequestMethod.GET);
+        final Request<String> request = NoHttp.createStringRequest(Constants.URL_NOHTTP_JSONOBJECT, RequestMethod.GET);
         request.add("name", "yanzhenjie") // String型。
                 .add("pwd", 123) // int型。
                 .add("userAge", 1.25) // double型。
@@ -77,16 +52,19 @@ public class NohttpActivity extends BaseActivity {
             @Override
             public void onStart(int what) {
                 Log.e(TAG, "onStart what:" + what);
+                mView.start();
             }
 
             @Override
             public void onSucceed(int what, Response<String> response) {
                 Log.e(TAG, "onSucceed what:" + what + " response: " + response.get());
+                mView.result(response.get());
             }
 
             @Override
             public void onFailed(int what, Response<String> response) {
                 Log.e(TAG, "onFailed what:" + what + " response: " + response.toString());
+                mView.fail();
             }
 
             @Override
@@ -94,6 +72,11 @@ public class NohttpActivity extends BaseActivity {
                 Log.e(TAG, "onFinish what:" + what);
             }
         });
-
     }
+
+
+
+
+
+
 }

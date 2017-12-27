@@ -3,11 +3,11 @@ package com.org.net.model.main.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.org.net.Bean.ClassBean;
+import com.org.net.bean.ClassBean;
 import com.org.net.R;
 import com.org.net.model.main.adapter.MainAdapter;
 import com.org.net.base.BaseActivity;
-import com.org.net.model.nohttp.NohttpActivity;
+import com.org.net.model.nohttp.activity.NohttpActivity;
 
 import java.util.ArrayList;
 import java.util.List;

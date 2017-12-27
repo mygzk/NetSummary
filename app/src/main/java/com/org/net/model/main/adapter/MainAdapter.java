@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.org.net.Bean.ClassBean;
+import com.org.net.bean.ClassBean;
 import com.org.net.R;
 
 import java.util.List;

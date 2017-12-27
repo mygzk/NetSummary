@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".model.nohttp.NohttpActivity"></activity>
+        <activity android:name=".model.nohttp.activity.NohttpActivity"></activity>
     </application>
 
 </manifest>

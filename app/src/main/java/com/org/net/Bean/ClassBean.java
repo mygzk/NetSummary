@@ -1,4 +1,4 @@
-package com.org.net.Bean;
+package com.org.net.bean;
 
 /**
  * Created by guozhk
