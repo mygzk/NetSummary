@@ -58,7 +58,7 @@ public class NohttpPresenter {
             @Override
             public void onSucceed(int what, Response<String> response) {
                 Log.e(TAG, "onSucceed what:" + what + " response: " + response.get());
-                mView.result(response.get());
+                mView.result(response);
             }
 
             @Override

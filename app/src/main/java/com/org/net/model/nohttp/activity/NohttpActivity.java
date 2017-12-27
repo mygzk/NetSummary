@@ -11,6 +11,7 @@ import com.org.net.R;
 import com.org.net.base.BaseActivity;
 import com.org.net.base.inteface.IBaseView;
 import com.org.net.constant.Constants;
+import com.org.net.dialog.WaitDialog;
 import com.org.net.model.nohttp.presenter.NohttpPresenter;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
@@ -24,6 +25,7 @@ public class NohttpActivity extends BaseActivity implements IBaseView {
     private TextView tvResult;
 
     private NohttpPresenter mNohttpPresenter;
+    private WaitDialog mWaitDialog;
 
     @Override
     protected int getLayoutId() {
@@ -49,23 +51,22 @@ public class NohttpActivity extends BaseActivity implements IBaseView {
         }
     }
 
-    private void requestOrigin() {
-
-    }
-
 
     @Override
     public void start() {
-
+        mWaitDialog = new WaitDialog(this);
+        mWaitDialog.show();
     }
 
     @Override
     public void fail() {
+        mWaitDialog.cancel();
 
     }
 
     @Override
     public void result(Object object) {
-
+        mWaitDialog.cancel();
+        tvResult.setText(object+"");
     }
 }
