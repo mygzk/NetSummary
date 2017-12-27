@@ -30,7 +30,8 @@ public class NohttpPresenter {
     public void requestOrigin() {
         RequestQueue mQueue = NoHttp.newRequestQueue();
         // 创建请求对象。
-        final Request<String> request = NoHttp.createStringRequest(Constants.URL_NOHTTP_JSONOBJECT, RequestMethod.GET);
+        final Request<String> request =
+                NoHttp.createStringRequest(Constants.URL_NOHTTP_JSONOBJECT, RequestMethod.GET);
         request.add("name", "yanzhenjie") // String型。
                 .add("pwd", 123) // int型。
                 .add("userAge", 1.25) // double型。
