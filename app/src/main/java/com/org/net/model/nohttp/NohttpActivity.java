@@ -1,4 +1,4 @@
-package com.org.net.ui;
+package com.org.net.model.nohttp;
 
 import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
 import com.yanzhenjie.nohttp.rest.Response;
 
-public class OrginActivity extends BaseActivity {
+public class NohttpActivity extends BaseActivity {
     /**
      * 用来标志请求的what, 类似handler的what一样，这里用来区分请求。
      */

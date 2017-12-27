@@ -1,4 +1,4 @@
-package com.org.net.adapter;
+package com.org.net.model.main.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
