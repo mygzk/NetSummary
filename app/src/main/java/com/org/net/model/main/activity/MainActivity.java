@@ -1,4 +1,4 @@
-package com.org.net.model.main;
+package com.org.net.model.main.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
