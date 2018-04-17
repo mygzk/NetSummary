@@ -21,7 +21,12 @@ ext {
             espresso  : 'com.android.support.test.espresso:espresso-core:3.0.1',
 
             nohttp    : 'com.yanzhenjie.nohttp:okhttp:1.1.5',
-            design    : 'com.android.support:design:22.2.0'
+            design    : 'com.android.support:design:27.0.2',
+            retrofit    : 'com.squareup.retrofit2:retrofit:2.4.0',
+            okhttp    : 'com.squareup.okhttp3:okhttp:3.10.0',
+            converter_gson:'com.squareup.retrofit2:converter-gson:2.0.2'
+
+
 
     ]
 }
