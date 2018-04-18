@@ -50,11 +50,11 @@ public class RetrofitManager {
 
     private OkHttpClient getOkhttp() {
 
-       // File cacheFile = new File(RetrofitApp.mApp.getCacheDir(), "net_cache_Data");
-        Log.e("getOkhttp","path:"+Environment.getExternalStorageDirectory());
+        // File cacheFile = new File(RetrofitApp.mApp.getCacheDir(), "net_cache_Data");
+        Log.e("getOkhttp", "path:" + Environment.getExternalStorageDirectory());
         //Log.e("getOkhttp","cacheFile path:"+cacheFile.getAbsolutePath());
         File cacheFile = new File(Environment.getExternalStorageDirectory(), "net_cache_Data");
-
+        Log.e("getOkhttp", " cacheFile  path:" +cacheFile.getAbsolutePath());
         //File cacheFile = new File(Environment.getExternalStorageDirectory(), "sdcard/net_cache_Data");
         //设置缓存大小
         Cache cache = new Cache(cacheFile, 10 * 1024 * 1024);//google建议放到这里
@@ -64,8 +64,9 @@ public class RetrofitManager {
                 .connectTimeout(15, TimeUnit.SECONDS)//超时时间15S
                 .readTimeout(15, TimeUnit.SECONDS)
                 // .writeTimeout(15, TimeUnit.SECONDS)
-                .addInterceptor(new LoggingInterceptor())
+                // .addInterceptor(new CacheInterceptor())
                 .addNetworkInterceptor(new CacheInterceptor())
+                .addInterceptor(new LoggingInterceptor())
                 .cache(cache)
                 .build();
 

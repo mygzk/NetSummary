@@ -26,16 +26,6 @@ import retrofit2.Response;
 
 public class HttpClient {
 
-//    req.addHeader("token", ApiType.token);
-//		req.addHeader("security", ApiType.security);
-//		req.addHeader("appVersion", ApiType.appVersion);
-//		req.addHeader("os", "android");
-//    /**根据不同主体身份返回不同数据*/
-//		req.addHeader("memberIdentity",ApiType.identity);
-//		req.addHeader("memberType", ApiType.roleType);
-//    /**根据不同入口上传不同团队管理身份1团长2团员*/
-//		req.addHeader("teamIdentity", ApiType.teamIdentity);
-
     public static void login(String phone, String pwd) {
 
         Map<String, String> header = new HashMap<>();
