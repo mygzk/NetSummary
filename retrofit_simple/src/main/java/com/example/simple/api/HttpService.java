@@ -25,27 +25,23 @@ public interface HttpService {
     @HTTP(method = "GET", path = "news", hasBody = false)
     Call<ResponseBody> getAllBlog();
 
-    /**
-     * method 表示请求的方法，区分大小写，retrofit 不会做处理
-     * path表示路径
-     * hasBody表示是否有请求体
-     */
-    @HTTP(method = "GET", path = "news/{id}")
-    Call<ResponseBody> getBlog(@Path("id") int id);
 
-
-    //@Headers({"Content-Type: application/json","Accept: application/json"})
-    //@POST("member/login/login")
-    //Call<ResponseBody> login(@HeaderMap Map<String, String> headers, @Body RequestBody body);
     @FormUrlEncoded
     @POST("member/login/login")
     Call<ResponseBody> login( @Field("phone") String phone, @Field("secretPasswd") String pwd);
-    //Call<ResponseBody> login(@HeaderMap Map<String, String> headers, @Field("phone") String phone, @Field("secretPasswd") String pwd);
 
     @GET("info")
     Call<ResponseBody> getInfo();
     @GET("news")
     Call<ResponseBody> gettest();
+
+    @GET("getPapers")
+    Call<ResponseBody> getPapers(@Header("token") String token);
+
+
+
+
+
 }
 
 

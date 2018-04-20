@@ -7,14 +7,10 @@ import android.telephony.TelephonyManager;
 import com.example.simple.MD5Util;
 import com.example.simple.RetrofitApp;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +22,7 @@ import retrofit2.Response;
 
 public class HttpClient {
 
-    public static void login(String phone, String pwd) {
+    public static <T> void login(String phone, String pwd) {
 
         Map<String, String> header = new HashMap<>();
         header.put("security", getSecurity());
@@ -90,6 +86,56 @@ public class HttpClient {
         } catch (Exception ex) {
             return "";
         }
+    }
+
+
+
+    public static void getPager(String token){
+        Call<ResponseBody> call = RetrofitManager.getInstanse().getHttpService().getPapers(token);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response != null && response.body() != null) {
+                        System.out.println("response:" + response.body().string());
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                System.out.println("onFailure:" + t.getMessage());
+            }
+        });
+    }
+
+
+    public static <T> void sendRequet(Call<T> call ){
+
+        call.enqueue(new Callback<T>() {
+            @Override
+            public void onResponse(Call<T> call, Response<T> response) {
+//                try {
+//                    if (response != null && response.body() != null) {
+//                        System.out.println("response:" + response.body().string());
+//                    }
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+            }
+
+            @Override
+            public void onFailure(Call<T> call, Throwable t) {
+//                t.printStackTrace();
+//                System.out.println("onFailure:" + t.getMessage());
+            }
+        });
+
     }
 
 }

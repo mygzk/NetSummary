@@ -19,7 +19,7 @@
             android:layout_margin="5dp"
             android:background="#123"
             android:gravity="center"
-            android:text="test1"
+            android:text="login"
             android:textColor="#89ffffff"
             android:textSize="15sp" />
 
@@ -31,7 +31,7 @@
             android:layout_margin="5dp"
             android:background="#123"
             android:gravity="center"
-            android:text="test2"
+            android:text="getPapers"
             android:textColor="#89ffffff"
             android:textSize="15sp" />
     </LinearLayout>

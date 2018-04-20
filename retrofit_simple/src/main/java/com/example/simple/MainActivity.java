@@ -33,23 +33,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rt_test1:
-               // test();
+                login();
                 break;
             case R.id.rt_test2:
-                test1();
+                getPager();
                 break;
         }
     }
 
-    private void test() {
+    private void login() {
 
         HttpClient.login("13977777777","123456abc");
        // manager.
     }
 
-    private void test1() {
+    private void getPager() {
 
-        HttpClient.getInfo();
+        HttpClient.getPager("HM097I7kPie3PLY4erPbX8v7Tto");
         // manager.
     }
 }
