@@ -1,17 +1,16 @@
-package com.example.simple.api;
+package com.org.rxsimple.net;
 
 import android.os.Environment;
-import android.util.Log;
-
-import com.example.simple.CacheInterceptor;
-import com.example.simple.RetrofitApp;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -22,8 +21,6 @@ public class RetrofitManager {
     private String TAG = RetrofitManager.class.getSimpleName();
     private static RetrofitManager manager;
     private Retrofit mRetrofit;
-    private HttpService mHttpService;
-
 
     public static RetrofitManager getInstanse() {
         if (manager == null) {
@@ -38,45 +35,38 @@ public class RetrofitManager {
 
 
     private RetrofitManager() {
+        initRetrofit();
+    }
+
+    private void initRetrofit() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(HttpConfig.BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(getOkhttp())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        mHttpService = mRetrofit.create(HttpService.class);
     }
 
 
     private OkHttpClient getOkhttp() {
-
-        // File cacheFile = new File(RetrofitApp.mApp.getCacheDir(), "net_cache_Data");
-        Log.e("getOkhttp", "path:" + Environment.getExternalStorageDirectory());
-        //Log.e("getOkhttp","cacheFile path:"+cacheFile.getAbsolutePath());
-        File cacheFile = new File(Environment.getExternalStorageDirectory(), "net_cache_Data");
-        Log.e("getOkhttp", " cacheFile  path:" +cacheFile.getAbsolutePath());
-        //File cacheFile = new File(Environment.getExternalStorageDirectory(), "sdcard/net_cache_Data");
-        //设置缓存大小
+        File cacheFile = new File(Environment.getExternalStorageDirectory(), "netCache");
         Cache cache = new Cache(cacheFile, 10 * 1024 * 1024);//google建议放到这里
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)//连接失败后是否重新连接
-                .connectTimeout(15, TimeUnit.SECONDS)//超时时间15S
-                .readTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(HttpConfig.CONNECT_TIME, TimeUnit.SECONDS)
+                .readTimeout(HttpConfig.READ_TIME, TimeUnit.SECONDS)
+                .writeTimeout(HttpConfig.WRITE_TIME, TimeUnit.SECONDS)
                 .cache(cache)
-                // .writeTimeout(15, TimeUnit.SECONDS)
-                // .addInterceptor(new CacheInterceptor())
-                .addNetworkInterceptor(new CacheInterceptor())
-               // .addInterceptor(new CacheInterceptor())
                 .addInterceptor(new LoggingInterceptor())
+                .addNetworkInterceptor(new CacheInterceptor())
                 .build();
-
         return client;
     }
 
 
-    public HttpService getHttpService() {
-        return mHttpService;
+    public <T> T createService(Class<T> serviceClass) {
+        return mRetrofit.create(serviceClass);
     }
 
 }
