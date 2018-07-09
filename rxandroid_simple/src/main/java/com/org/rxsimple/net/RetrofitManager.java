@@ -58,7 +58,7 @@ public class RetrofitManager {
                 .readTimeout(HttpConfig.READ_TIME, TimeUnit.SECONDS)
                 .writeTimeout(HttpConfig.WRITE_TIME, TimeUnit.SECONDS)
                 .cache(cache)
-                .addInterceptor(new LoggingInterceptor())
+               // .addInterceptor(new LoggingInterceptor())
                 .addNetworkInterceptor(new CacheInterceptor())
                 .build();
         return client;

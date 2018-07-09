@@ -9,8 +9,10 @@ import android.view.View;
 import com.org.rxsimple.net.NetService;
 import com.org.rxsimple.net.RetrofitManager;
 
+import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @SuppressLint("CheckResult")
     private void testLogin() {
         RetrofitManager.getInstanse().createService(NetService.class).
                 login("13977777777", "123456abc")
@@ -54,10 +55,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+             /*   .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        Log.e("accept","s:"+s);
+
+                    }
+                });*/
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.e("result","onSubscribe");
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+
+                        Log.e("result","onNext s:"+s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("result","onError");
+                        e.printStackTrace();
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.e("result","onComplete");
                     }
                 });
 

@@ -1,5 +1,7 @@
 package com.org.rxsimple.net;
 
+import android.util.Log;
+
 import com.org.rxsimple.App;
 import com.org.rxsimple.NetUtil;
 
@@ -13,6 +15,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CacheInterceptor implements Interceptor {
+
+
+    private String TAG = CacheInterceptor.class.getSimpleName();
+
     //设置缓存时间60s
     private int MAXAGE_NET = 1 * 60;
     //设置缓存时间1天
@@ -20,6 +26,7 @@ public class CacheInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+        Log.e(TAG, "=====CacheInterceptor====");
         Request request = chain.request();
         if (!NetUtil.isNetworkAvalible(App.getApp().getApplicationContext())) {
             request = request.newBuilder()

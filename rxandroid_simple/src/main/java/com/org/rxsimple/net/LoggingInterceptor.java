@@ -26,15 +26,23 @@ public class LoggingInterceptor implements Interceptor {
     private String TAG = LoggingInterceptor.class.getSimpleName();
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(Chain chain)  {
         Request request = chain.request();
         long t1 = System.nanoTime();
         Log.e(TAG, String.format("Sending request %s on %s%n%s",
                 request.url(), chain.connection(), request.headers()));
-        Response response = chain.proceed(request);
-        long t2 = System.nanoTime();
-        Log.e(TAG,   "Received response for"+response.request().url()+
-                "in "+ (t2 - t1)+ " "+response.headers()+"connection="+chain.connection());
+
+        Response response = null;
+        try {
+            response = chain.proceed(request);
+            long t2 = System.nanoTime();
+            Log.e(TAG,   "Received response for"+response.request().url()+
+                    "in "+ (t2 - t1)+ " "+response.headers()+"connection="+chain.connection());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return response;
     }
 }
