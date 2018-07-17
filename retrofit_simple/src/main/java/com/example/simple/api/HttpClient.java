@@ -3,6 +3,7 @@ package com.example.simple.api;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.example.simple.MD5Util;
 import com.example.simple.RetrofitApp;
@@ -38,6 +39,8 @@ public class HttpClient {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     System.out.println("response:" + response.body().string());
+                    String s = response.body().string();
+                    Log.e("res","response:" + response.body().string());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

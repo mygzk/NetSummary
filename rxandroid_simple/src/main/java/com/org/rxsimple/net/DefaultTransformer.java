@@ -17,12 +17,17 @@ public class DefaultTransformer<T> implements ObservableTransformer<T, T> {
     public ObservableSource<T> apply(Observable<T> upstream) {
         return upstream.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<T, T>() {
-                    @Override
-                    public T apply(T t) throws Exception {
-                        return t;
-                    }
-                });
+                .observeOn(AndroidSchedulers.mainThread());
+//                .map(new Function<T, T>() {
+//                    @Override
+//                    public T apply(T t){
+//                        try {
+//
+//                        }catch (Exception e){
+//
+//                        }
+//                        return t;
+//                    }
+//                });
     }
 }

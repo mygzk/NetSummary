@@ -12,5 +12,8 @@ public interface NetService {
     @POST("member/login/login")
     Observable<BaseEntity<String> > login(@Field("phone") String phone, @Field("secretPasswd") String pwd);
 
+    @FormUrlEncoded
+    @POST("member/login/login")
+    Observable<ResponseBody > login1(@Field("phone") String phone, @Field("secretPasswd") String pwd);
 
 }

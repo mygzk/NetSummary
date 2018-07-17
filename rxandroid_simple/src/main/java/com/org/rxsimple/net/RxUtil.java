@@ -12,34 +12,8 @@ import io.reactivex.schedulers.Schedulers;
  * create by guozhk on 2018/7/17
  **/
 public class RxUtil {
-    public static Observable compose(Observable observable) {
-        observable.compose(new ObservableTransformer() {
-            @Override
-            public ObservableSource apply(Observable upstream) {
-                return null;
-            }
-        }).subscribe(new Observer() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-        return observable.compose(new ObservableTransformer() {
+    public static <T> Observable compose(Observable<T> observable) {
+        return observable.compose(new ObservableTransformer<T,T>() {
             @Override
             public ObservableSource apply(Observable upstream) {
                 return upstream.subscribeOn(Schedulers.io())
