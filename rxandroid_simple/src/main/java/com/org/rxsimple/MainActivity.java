@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.org.rxsimple.net.BaseEntity;
 import com.org.rxsimple.net.NetService;
+import com.org.rxsimple.net.NetServiceManager;
 import com.org.rxsimple.net.RetrofitManager;
 
 import io.reactivex.Observer;
@@ -44,46 +46,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void testLogin() {
-        RetrofitManager.getInstanse().createService(NetService.class).
-                login("13977777777", "123456abc")
-                .map(new Function<ResponseBody, String>() {
+        NetServiceManager.getInstance().login("123456abc","123456abc" );
+
+        RetrofitManager.getInstanse().createService(NetService.class)
+                .login("13977777777", "123456abc")
+               /* .map(new Function<ResponseBody, String>() {
                     @Override
                     public String apply(ResponseBody responseBody) throws Exception {
                         Log.e("apply","adsdasdasda");
                         return responseBody.string();
                     }
-                })
+                })*/
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-             /*   .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-
-                    }
-                });*/
-                .subscribe(new Observer<String>() {
+                .subscribe(new Observer<BaseEntity<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.e("result","onSubscribe");
 
                     }
 
                     @Override
-                    public void onNext(String s) {
+                    public void onNext(BaseEntity<String> stringBaseEntity) {
 
-                        Log.e("result","onNext s:"+s);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("result","onError");
-                        e.printStackTrace();
 
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("result","onComplete");
+
                     }
                 });
 

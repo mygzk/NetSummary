@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public interface NetService {
     @FormUrlEncoded
     @POST("member/login/login")
-    Observable<ResponseBody> login(@Field("phone") String phone, @Field("secretPasswd") String pwd);
+    Observable<BaseEntity<String> > login(@Field("phone") String phone, @Field("secretPasswd") String pwd);
 
 
 }
