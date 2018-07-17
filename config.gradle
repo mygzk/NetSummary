@@ -11,21 +11,21 @@ ext {
 
     dependencies = [
             // support.
-            appCompat : 'com.android.support:appcompat-v7:26.1.0',
+            appCompat     : 'com.android.support:appcompat-v7:26.1.0',
             //recyclerView   : 'com.android.support:recyclerview-v7:25.3.1',
             // design         : 'com.android.support:design:25.3.1',
 
-            constraint: 'com.android.support.constraint:constraint-layout:1.0.2',
-            junit     : 'junit:junit:4.12',
-            runner    : 'com.android.support.test:runner:1.0',
-            espresso  : 'com.android.support.test.espresso:espresso-core:3.0.1',
-
-            nohttp    : 'com.yanzhenjie.nohttp:okhttp:1.1.5',
-            design    : 'com.android.support:design:27.0.2',
-            retrofit    : 'com.squareup.retrofit2:retrofit:2.4.0',
-            okhttp    : 'com.squareup.okhttp3:okhttp:3.10.0',
-            converter_gson:'com.squareup.retrofit2:converter-gson:2.0.2'
-
+            constraint    : 'com.android.support.constraint:constraint-layout:1.0.2',
+            junit         : 'junit:junit:4.12',
+            runner        : 'com.android.support.test:runner:1.0',
+            espresso      : 'com.android.support.test.espresso:espresso-core:3.0.1',
+            nohttp        : 'com.yanzhenjie.nohttp:okhttp:1.1.5',
+            design        : 'com.android.support:design:27.0.2',
+            retrofit      : 'com.squareup.retrofit2:retrofit:2.4.0',
+            okhttp        : 'com.squareup.okhttp3:okhttp:3.10.0',
+            converter_gson: 'com.squareup.retrofit2:converter-gson:2.0.2',
+            rxandroid     : 'io.reactivex.rxjava2:rxandroid:2.0.2',
+            rxjava        : 'io.reactivex.rxjava2:rxjava:2.1.12'
 
 
     ]

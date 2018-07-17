@@ -35,7 +35,8 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies.espresso
     compile rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.design
-    implementation rootProject.ext.dependencies.retrofit
+    implementation rootProject.ext.dependencies.rxandroid
+    implementation rootProject.ext.dependencies.rxjava
     implementation rootProject.ext.dependencies.converter_gson
     implementation  rootProject.ext.dependencies.okhttp
 }

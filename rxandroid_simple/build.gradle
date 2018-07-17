@@ -35,5 +35,4 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation rootProject.ext.dependencies.converter_gson
     implementation rootProject.ext.dependencies.okhttp
-
 }

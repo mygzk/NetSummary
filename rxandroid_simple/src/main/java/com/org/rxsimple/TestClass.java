@@ -1,9 +1,7 @@
 package com.org.rxsimple;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -11,15 +9,11 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.Subject;
 
 /**
  * Created by guozhk on 2018/4/20.
@@ -412,13 +406,28 @@ public class TestClass {
 //                });
 
         Observable.just(1,2,3,4,5,6)
-                .buffer(3,2)
-                .subscribe(new Consumer<List<Integer>>() {
-            @Override
-            public void accept(List<Integer> integers) throws Exception {
-                printer("integer:"+integers.size());
-            }
-        });
+                //.buffer(3,2)
+                .flatMap(new Function<Integer, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(Integer integer) throws Exception {
+                        return Observable.just(integer+"---");
+
+                    }
+                })
+                .flatMap(new Function<String, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(String s) throws Exception {
+                        return Observable.just(s+"++++++");
+                    }
+                });
+//                .map(new Function<String, Object>() {
+//                })
+//                .subscribe(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String s) throws Exception {
+//                        printer("integer:"+s);
+//                    }
+//                });
 
 
     }

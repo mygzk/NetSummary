@@ -1,6 +1,8 @@
 package com.example.simple.api;
 
 
+import android.database.Observable;
+
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -37,6 +39,10 @@ public interface HttpService {
 
     @GET("getPapers")
     Call<ResponseBody> getPapers(@Header("token") String token);
+
+
+
+    <T> Observable<T> getTop250();
 
 
 
