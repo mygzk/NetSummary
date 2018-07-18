@@ -7,7 +7,7 @@ import java.io.Serializable;
  **/
 public class BaseEntity<T> implements Serializable {
     private int code;
-    private String msg;
+    private String errorMsg;
     private T content;
     private boolean success;
 
@@ -19,12 +19,12 @@ public class BaseEntity<T> implements Serializable {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public T getContent() {
@@ -35,7 +35,17 @@ public class BaseEntity<T> implements Serializable {
         this.content = content;
     }
 
+    /**
+     * 根据业务具体判断
+     *
+     * @return boolean
+     */
     public boolean isSuccess() {
+        if (code != 0) {
+            success = false;
+        } else {
+            success = true;
+        }
         return success;
     }
 

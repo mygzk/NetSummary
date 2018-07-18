@@ -19,18 +19,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
     private String TAG = RetrofitManager.class.getSimpleName();
-    private static RetrofitManager manager;
     private Retrofit mRetrofit;
 
+    private static class RetrofitManagerHolder {
+        private static RetrofitManager INSTANCE = new RetrofitManager();
+    }
+
     public static RetrofitManager getInstanse() {
-        if (manager == null) {
-            synchronized (RetrofitManager.class) {
-                if (manager == null) {
-                    manager = new RetrofitManager();
-                }
-            }
-        }
-        return manager;
+        return RetrofitManagerHolder.INSTANCE;
     }
 
 
@@ -51,17 +47,15 @@ public class RetrofitManager {
     private OkHttpClient getOkhttp() {
         File cacheFile = new File(Environment.getExternalStorageDirectory(), "netCache");
         Cache cache = new Cache(cacheFile, 10 * 1024 * 1024);//google建议放到这里
-
-        OkHttpClient client = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)//连接失败后是否重新连接
                 .connectTimeout(HttpConfig.CONNECT_TIME, TimeUnit.SECONDS)
                 .readTimeout(HttpConfig.READ_TIME, TimeUnit.SECONDS)
                 .writeTimeout(HttpConfig.WRITE_TIME, TimeUnit.SECONDS)
                 .cache(cache)
-               // .addInterceptor(new LoggingInterceptor())
+                .addInterceptor(new LoggingInterceptor())
                 .addNetworkInterceptor(new CacheInterceptor())
                 .build();
-        return client;
     }
 
 
