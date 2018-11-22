@@ -4,16 +4,24 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.org.rxsimple.net.CacheInterceptor;
+import com.org.rxsimple.net.DefaultTransformer;
 import com.org.rxsimple.net.HttpConfig;
 import com.org.rxsimple.net.HttpsHostnameVerifier;
 import com.org.rxsimple.net.LoggingInterceptor;
 import com.org.rxsimple.net.RetrofitManager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -67,28 +75,103 @@ public class DownLoadManager {
                 .build();
     }
 
-    public <T> T createService(Class<T> serviceClass) {
+    private <T> T createService(Class<T> serviceClass) {
         return mRetrofit.create(serviceClass);
     }
 
-    public <T> T download(Class<T> serviceClass, String url, String fileSavePath, IProcessListener listener) {
+    /**
+     * 下载
+     *
+     * @param url          url
+     * @param fileSavePath fileSavePath
+     * @param listener     listener
+     */
+    public void download(String url, final String fileSavePath, final IProcessListener listener) {
         if (TextUtils.isEmpty(url)) {
             if (listener != null) {
                 listener.onFail("下载地址为空");
             }
-            return null;
+            return;
         }
         if (TextUtils.isEmpty(fileSavePath)) {
             if (listener != null) {
                 listener.onFail("文件保存地址为空");
             }
-            return null;
+            return;
         }
         initRetrofit(listener);
 
-        return createService(serviceClass);
+        DownloadService downloadService = createService(DownloadService.class);
+        downloadService.download(url)
+                .compose(new DefaultTransformer<ResponseBody>())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (listener != null) {
+                            listener.onStart();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        if (responseBody == null) {
+                            writeFile(responseBody.byteStream(), fileSavePath, listener);
+                        } else {
+                            if (listener != null) {
+                                listener.onFail("下载失败");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (listener != null) {
+                            listener.onFail(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (listener != null) {
+                            listener.onFinishDownload();
+                        }
+                    }
+                });
 
     }
 
+
+    /**
+     * 将输入流写入文件
+     *
+     * @param inputString
+     * @param filePath
+     */
+    private void writeFile(InputStream inputString, String filePath, IProcessListener listener) {
+
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+
+            byte[] b = new byte[1024];
+
+            int len;
+            while ((len = inputString.read(b)) != -1) {
+                fos.write(b, 0, len);
+            }
+            inputString.close();
+            fos.close();
+
+        } catch (FileNotFoundException e) {
+            listener.onFail("FileNotFoundException");
+        } catch (IOException e) {
+            listener.onFail("IOException");
+        }
+    }
 
 }

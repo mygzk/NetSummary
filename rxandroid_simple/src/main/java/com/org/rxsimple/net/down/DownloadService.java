@@ -1,4 +1,4 @@
-package com.org.rxsimple.apiservice;
+package com.org.rxsimple.net.down;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
