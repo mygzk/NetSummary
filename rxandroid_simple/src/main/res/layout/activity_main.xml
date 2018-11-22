@@ -29,6 +29,19 @@
         android:textColor="#fff"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_login"
+        />
+
+    <TextView
+        android:id="@+id/tv_down"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="5dp"
+        android:background="#123"
+        android:gravity="center"
+        android:text="tv_down"
+        android:textColor="#fff"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login1"
 
         />
 

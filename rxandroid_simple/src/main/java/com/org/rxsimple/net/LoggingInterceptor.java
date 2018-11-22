@@ -36,8 +36,8 @@ public class LoggingInterceptor implements Interceptor {
         try {
             response = chain.proceed(request);
             long t2 = System.nanoTime();
-            Log.e(TAG,   "Received response for"+response.request().url()+
-                    "in "+ (t2 - t1)+ " "+response.headers()+"connection="+chain.connection());
+            Log.e(TAG,   "Received response for "+response.request().url()+
+                    " in "+ (t2 - t1)+ " "+response.headers()+" connection="+chain.connection());
         } catch (IOException e) {
             e.printStackTrace();
         }catch (Exception e){

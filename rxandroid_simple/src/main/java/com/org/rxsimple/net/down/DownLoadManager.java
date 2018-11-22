@@ -1,14 +1,13 @@
 package com.org.rxsimple.net.down;
 
-import android.os.Environment;
 import android.text.TextUtils;
 
 import com.org.rxsimple.net.CacheInterceptor;
 import com.org.rxsimple.net.DefaultTransformer;
 import com.org.rxsimple.net.HttpConfig;
+import com.org.rxsimple.net.HttpLogger;
 import com.org.rxsimple.net.HttpsHostnameVerifier;
 import com.org.rxsimple.net.LoggingInterceptor;
-import com.org.rxsimple.net.RetrofitManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -59,19 +58,21 @@ public class DownLoadManager {
     }
 
     private OkHttpClient getOkhttp(IProcessListener listener) {
-
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());//创建拦截对象
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//这一句一定要记得写，否则没有数据输出
         return new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)//连接失败后是否重新连接
                 .connectTimeout(HttpConfig.CONNECT_TIME, TimeUnit.SECONDS)
                 .readTimeout(HttpConfig.READ_TIME, TimeUnit.SECONDS)
                 .writeTimeout(HttpConfig.WRITE_TIME, TimeUnit.SECONDS)
+                .addNetworkInterceptor(logInterceptor)
                 // .cache(cache)
-                .addInterceptor(new LoggingInterceptor())
-                .addNetworkInterceptor(new CacheInterceptor())
+              //  .addInterceptor(new LoggingInterceptor())
+              //  .addNetworkInterceptor(new CacheInterceptor())
                 .addInterceptor(new DownloadInterceptor(listener))
                 //暂时这样处理
                 // .sslSocketFactory(HttpsFactory.getSSLSocketFactory(App.getApp(), HttpConfig.certificates))
-                .hostnameVerifier(new HttpsHostnameVerifier(HttpConfig.BASE_URLS))
+              //  .hostnameVerifier(new HttpsHostnameVerifier(HttpConfig.BASE_URLS))
                 .build();
     }
 
@@ -101,8 +102,8 @@ public class DownLoadManager {
         }
         initRetrofit(listener);
 
-        DownloadService downloadService = createService(DownloadService.class);
-        downloadService.download(url)
+      //  DownloadService downloadService = createService(DownloadService.class);
+        createService(DownloadService.class).download(url)
                 .compose(new DefaultTransformer<ResponseBody>())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
