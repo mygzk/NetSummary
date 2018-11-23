@@ -12,6 +12,7 @@ public class HttpConfig {
     public static final long READ_TIME = 10L;
     public static final long WRITE_TIME = 10L;
     public static final String BASE_URL = "http://dat.dahuobaoxian.com";
+    public static final String BASE_URL1 = "http://dat.dahuobaoxian.com/";
 
     public static final String[] BASE_URLS = new String[]{BASE_URL};
 

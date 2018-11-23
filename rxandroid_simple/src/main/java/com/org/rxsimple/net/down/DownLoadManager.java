@@ -50,7 +50,7 @@ public class DownLoadManager {
 
     private void initRetrofit(IProcessListener listener) {
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(HttpConfig.BASE_URL)
+                .baseUrl(HttpConfig.BASE_URL1)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(getOkhttp(listener))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -115,7 +115,7 @@ public class DownLoadManager {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        if (responseBody == null) {
+                        if (responseBody != null) {
                             writeFile(responseBody.byteStream(), fileSavePath, listener);
                         } else {
                             if (listener != null) {
