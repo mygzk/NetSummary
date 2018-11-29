@@ -8,11 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="comm_tv">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">#0a74de</item>
-    </style>
-
 </resources>
