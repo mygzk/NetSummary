@@ -1,1 +1,1 @@
-include ':app', ':retrofit_simple', ':rxandroid_simple'
+include ':app'
