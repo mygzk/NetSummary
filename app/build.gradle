@@ -43,4 +43,9 @@ dependencies {
     implementation rootProject.ext.dependencies.rxandroid
     implementation rootProject.ext.dependencies.rxjava
 
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+
+
+
+
 }

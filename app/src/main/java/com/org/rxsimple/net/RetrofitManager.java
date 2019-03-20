@@ -3,6 +3,7 @@ package com.org.rxsimple.net;
 import android.os.Environment;
 
 import com.org.rxsimple.App;
+import com.org.rxsimple.net.fast.FastJsonConverterFactory;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +41,7 @@ public class RetrofitManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(getOkhttp())
                 .addConverterFactory(GsonConverterFactory.create())
+                //.addConverterFactory(FastJsonConverterFactory.create())
                 .build();
     }
 
